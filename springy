@@ -41,7 +41,7 @@ init() {
   echo ""
 
   echo "Generating project structure..."
-  mkdir $the_path/$projectName $the_path/$projectName/src $the_path/$projectName/src/views $the_path/$projectName/src/modelControllers $the_path/$projectName/lib
+  mkdir $the_path/$projectName $the_path/$projectName/src $the_path/$projectName/src/views $the_path/$projectName/src/modelControllers $the_path/$projectName/src/static $the_path/$projectName/lib
   echo ""
   read -p "Do you use VS Code ? [y/n] " -n 1 -r
   if [[ $REPLY =~ ^[Yy]$ ]]
@@ -59,6 +59,7 @@ init() {
   echo ""
 
   echo "Importing the springy jar file..."
+  echo ""
   read -p ">> Enter the path to the springy jar file: " springyPath
   if [[ -f $springyPath ]]
     then
@@ -90,9 +91,20 @@ init() {
   echo "        <url-pattern>/</url-pattern>" >> $the_path/$projectName/web.xml
   echo "    </servlet-mapping>" >> $the_path/$projectName/web.xml
   echo "" >> $the_path/$projectName/web.xml
+  echo "    <servlet>" >> $the_path/$projectName/web.xml
+  echo "        <servlet-name>default</servlet-name>" >> $the_path/$projectName/web.xml
+  echo "        <servlet-class>org.apache.catalina.servlets.DefaultServlet</servlet-class>" >> $the_path/$projectName/web.xml
+  echo "    </servlet>" >> $the_path/$projectName/web.xml
+  echo "" >> $the_path/$projectName/web.xml
+  echo "    <servlet-mapping>" >> $the_path/$projectName/web.xml
+  echo "        <servlet-name>default</servlet-name>" >> $the_path/$projectName/web.xml
+  echo "        <url-pattern>/static/*</url-pattern>" >> $the_path/$projectName/web.xml
+  echo "    </servlet-mapping>" >> $the_path/$projectName/web.xml
+  echo "" >> $the_path/$projectName/web.xml
   echo "</web-app>" >> $the_path/$projectName/web.xml
   echo ""
   echo -e "${YELLOW}NOTE:${NC} You can always edit the web.xml file later"
+  echo ""
   echo -e "${GREEN}Project initialized successfully${NC}"
 }
 
@@ -115,12 +127,13 @@ deploy() {
   [ $the_path == "." ] && project_name=$(pwd) || project_name=$the_path
 
   # creating the directory structure for the project test to deploy
-  mkdir temp temp/views temp/WEB-INF temp/WEB-INF/classes temp/WEB-INF/lib
+  mkdir temp temp/views temp/static temp/WEB-INF temp/WEB-INF/classes temp/WEB-INF/lib
 
   # copying jar file to the project library and the web.xml file
   cp lib/* temp/WEB-INF/lib 
   cp web.xml temp/WEB-INF/
-  cp src/views/* temp/views/
+  cp -r src/views/* temp/views/
+  cp -r src/static/* temp/static/
 
   classpath_string=$(find lib/ -name '*.jar' | tr '\n' ':')
   # compiling models and other user necessity to the project classes directory
@@ -147,13 +160,13 @@ case $1 in
     init $input_path
     ;;
   -u|--uninstall)
-    read -p "Are you sure you want to uninstall springy-cli ? [y/n] " -n 1 -r
+    read -p ">> Are you sure you want to uninstall springy-cli ? [y/n] " -n 1 -r
     echo ""
     if [[ $REPLY =~ ^[Yy]$ ]]
       then
         echo "Uninstalling springy-cli..."
         sleep 1
-        echo "This require sudo privileges"
+        echo "This require sudo privileges (may ask password)"
         sudo rm /usr/local/bin/springy
     fi
     ;;
