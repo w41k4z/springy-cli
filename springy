@@ -41,7 +41,7 @@ init() {
   echo ""
 
   echo "Generating project structure..."
-  mkdir $the_path/$projectName $the_path/$projectName/src $the_path/$projectName/src/views $the_path/$projectName/src/modelControllers $the_path/$projectName/src/static $the_path/$projectName/lib
+  mkdir $the_path/$projectName $the_path/$projectName/src $the_path/$projectName/src/views $the_path/$projectName/src/controllers $the_path/$projectName/src/static $the_path/$projectName/lib
   echo ""
   read -p "Do you use VS Code ? [y/n] " -n 1 -r
   if [[ $REPLY =~ ^[Yy]$ ]]
