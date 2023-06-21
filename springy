@@ -84,11 +84,6 @@ init() {
   echo "    <servlet>" >> $the_path/$projectName/web.xml
   echo "        <servlet-name>FrontServlet</servlet-name>" >> $the_path/$projectName/web.xml
   echo "        <servlet-class>etu2011.framework.servlet.FrontServlet</servlet-class>" >> $the_path/$projectName/web.xml
-  echo "    </servlet>" >> $the_path/$projectName/web.xml
-  echo "" >> $the_path/$projectName/web.xml
-  echo "    <servlet-mapping>" >> $the_path/$projectName/web.xml
-  echo "        <servlet-name>FrontServlet</servlet-name>" >> $the_path/$projectName/web.xml
-  echo "        <url-pattern>/</url-pattern>" >> $the_path/$projectName/web.xml
   echo "        <init-param>" >> $the_path/$projectName/web.xml
   echo "            <param-name>sessionName</param-name>" >> $the_path/$projectName/web.xml
   echo "            <param-value></param-value>" >> $the_path/$projectName/web.xml
@@ -97,6 +92,11 @@ init() {
   echo "            <param-name>sessionProfile</param-name>" >> $the_path/$projectName/web.xml
   echo "            <param-value></param-value>" >> $the_path/$projectName/web.xml
   echo "        </init-param>" >> $the_path/$projectName/web.xml
+  echo "    </servlet>" >> $the_path/$projectName/web.xml
+  echo "" >> $the_path/$projectName/web.xml
+  echo "    <servlet-mapping>" >> $the_path/$projectName/web.xml
+  echo "        <servlet-name>FrontServlet</servlet-name>" >> $the_path/$projectName/web.xml
+  echo "        <url-pattern>/</url-pattern>" >> $the_path/$projectName/web.xml
   echo "    </servlet-mapping>" >> $the_path/$projectName/web.xml
   echo "" >> $the_path/$projectName/web.xml
   echo "    <servlet>" >> $the_path/$projectName/web.xml
